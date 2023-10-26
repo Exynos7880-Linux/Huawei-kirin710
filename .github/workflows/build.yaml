@@ -1,0 +1,36 @@
+name: Build Ubports Images
+
+on: 
+  push:
+    branches:
+      - Halium-11
+  release:
+    types: [published]
+
+jobs:
+
+  focal_build_a5:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Focal Build Miami
+      run: |
+        set -x
+        sudo apt-get update
+        sudo apt install android-tools-mkbootimg build-essential ccache img2simg -y
+        ./build.sh
+        ./build/prepare-fake-ota.sh out/device_miami.tar.xz ota
+        ./build/system-image-from-ota.sh ota/ubuntu_command out
+      shell: bash
+    - uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ env.NOW }}"
+        prerelease: false
+        title: "${{ env.NOW }}"
+        files: |
+          out/rootfs.img
+          out/boot.img
