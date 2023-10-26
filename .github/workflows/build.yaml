@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  focal_build_a5:
+  focal_build_miami:
     runs-on: ubuntu-20.04
 
     steps:
