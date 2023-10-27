@@ -28,12 +28,12 @@ jobs:
         ./build/system-image-from-ota.sh ota/ubuntu_command out
         echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
       shell: bash
-    - uses: marvinpinto/action-automatic-releases@latest
+    - uses: softprops/action-gh-release@v1
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
-        prerelease: true
-        title: "latest"
         files: |
           out/rootfs.img
           out/boot.img
+        name: Kirin710-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
