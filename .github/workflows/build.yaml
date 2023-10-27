@@ -20,7 +20,9 @@ jobs:
       run: |
         set -x
         sudo apt-get update
-        sudo apt install android-tools-mkbootimg build-essential ccache img2simg -y
+        sudo apt install build-essential ccache img2simg -y
+        sudo wget https://raw.githubusercontent.com/LineageOS/android_system_tools_mkbootimg/lineage-19.1/mkbootimg.py -O /usr/bin/mkbootimg
+        sudo chmod 755 /usr/bin/mkbootimg
         ./build.sh
         ./build/prepare-fake-ota.sh out/device_miami.tar.xz ota
         ./build/system-image-from-ota.sh ota/ubuntu_command out
