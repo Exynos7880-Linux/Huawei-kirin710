@@ -26,6 +26,7 @@ jobs:
         ./build.sh
         ./build/prepare-fake-ota.sh out/device_miami.tar.xz ota
         ./build/system-image-from-ota.sh ota/ubuntu_command out
+        echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
       shell: bash
     - uses: marvinpinto/action-automatic-releases@latest
       with:
