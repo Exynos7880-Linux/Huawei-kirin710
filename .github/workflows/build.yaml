@@ -11,6 +11,8 @@ jobs:
 
   focal_build_miami:
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout
@@ -26,12 +28,13 @@ jobs:
         ./build.sh
         ./build/prepare-fake-ota.sh out/device_miami.tar.xz ota
         ./build/system-image-from-ota.sh ota/ubuntu_command out
+        tar -czf out/rootfs.tar.gz out/rootfs.img
         echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
       shell: bash
     - uses: softprops/action-gh-release@v1
       with:
         files: |
-          out/rootfs.img
+          out/rootfs.tar.gz
           out/boot.img
         name: Kirin710-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
