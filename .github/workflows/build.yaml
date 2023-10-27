@@ -31,9 +31,9 @@ jobs:
     - uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{ env.NOW }}"
-        prerelease: false
-        title: "${{ env.NOW }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "latest"
         files: |
           out/rootfs.img
           out/boot.img
